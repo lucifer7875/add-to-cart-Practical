@@ -1,0 +1,121 @@
+.card-body {
+    display: flex;
+}
+
+.infoAboutItem {
+    margin-left: 15px;
+
+}
+
+.nav {
+    width: 600px;
+    height: 46px;
+    box-shadow: 0px 3px 7px 1px;
+    margin: 12px 0px 0px 500px;
+    background: #ffff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background-color: #0d6efd;
+}
+
+
+.flexCard {
+    display: flex;
+    justify-content: center;
+}
+
+.rightCard {
+    margin-left: 25px;
+}
+
+img {
+    border-radius: 10px;
+}
+
+.cartButton {
+    border-style: none;
+    margin: 15px 0px 0px 200px;
+    border-radius: 15px;
+    width: 120px;
+    background-color: #0d6efd;
+    color: white;
+    font-size: 20px;
+}
+
+.cartButton:hover {
+    background-color: #ffff;
+    color: black;
+}
+
+#imageOfItem {
+    width: 100px;
+}
+
+table {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+}
+
+tr,
+td,
+th {
+    text-align: center;
+
+}
+tr {
+    border: solid 1px #000;
+}
+
+#getImage {
+    width: 100px;
+}
+
+#decrement,
+#increment {
+    padding: auto;
+    background-color: #0d6efd;
+    border: none;
+    margin: 0px 4px 0px 4px;
+}
+
+#decrement:hover,
+#increment:hover {
+    background-color: #ffff;
+}
+
+.number {
+    text-align: center;
+    width: 50px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn {
+    margin-left: 20px;
+    border-style: none;
+    border-radius: 5px;
+    width: 200px;
+    background-color: #0d6efd;
+    color: white;
+
+}
+
+#sum {
+    font-weight: bold;
+    font-size: larger;
+    margin-left: 58pc;
+    margin-top: -33px;
+}
+
+/* th{
+    padding: 20px;
+    background-color: #dfdfdf;
+}
+.bi-x{
+    font-size: xx-large;
+} */

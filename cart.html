@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <!-- Bootstrap Css version 5-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <!-- external css -->
+    <link rel="stylesheet" href="./css/index.css" />
+    <script>
+      function Delete(elem) {
+        // it's delete function for deleting item from cart
+        let products = [];
+        JSON.parse(localStorage.getItem("products")).map((data) => {
+          if (
+            data.id != elem.parentElement.parentElement.children[0].textContent
+          ) {
+            products.push(data);
+          }
+        });
+        localStorage.setItem("products", JSON.stringify(products));
+        window.location.reload();
+      }
+    </script>
+
+    <style>
+      #number {
+        width: 40px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cartBox">
+      <div class="cart"></div>
+      <table class="table table-hover"></table>
+    </div>
+
+    <div style="margin-top: 50px; display: flex">
+      <a href="./index.html"><button class="btn">Countinue Shoping</button></a>
+      <div>
+        <p id="sum">SubTotal = $</p>
+        <button class="btn" style="margin-left: 58pc">Check Out</button>
+      </div>
+    </div>
+    <script>
+      // adding data into table
+      let cartBox = document.querySelector(".cartBox"); // call div who's class name is cartBox
+      const cardTable = cartBox.querySelector("table"); // call table
+      let tableData = "";
+      //  creating table head
+      tableData +=
+        "<tr><th>Food Id</th><th></th><th>Food Name</th><th>Food Price</th><th >Qty</th><th>Total</th><th></th></tr>";
+
+      if (JSON.parse(localStorage.getItem("products"))[0] === null) {
+        tableData += '<tr><td colspan="6">No food product in cart</td></tr>';
+      } else {
+        JSON.parse(localStorage.getItem("products")).map((data) => {
+          tableData +=
+            "<tr><td>" +
+            data.id +
+            '</td><td><img id="getImage" src=' +
+            data.Image +
+            " >" +
+            "</td><td>" +
+            data.name +
+            '</td><td id="fPrice">' +
+            data.price +
+            '</td><td id="qtyOfProduct">' +
+            '<input type="button" value="-" onclick="decrement(this)" id="decrement"/>' +
+            '<input type="text" name="qunty"  value="1" maxlength="2" max="20" class="number"/>' +
+            '<input type="button" value="+" onclick="increment(this)" id="increment"/>' +
+            '</td><td id="totalPrice" >' +
+            data.price +
+            '</td><td><a href="#" onclick="Delete(this)">DELETE</a></td></tr>'; // call every data from localstroage
+        });
+      }
+      cardTable.innerHTML = tableData;
+
+      // ========== add dainamicaly id ========================
+
+      var qty = document.querySelectorAll("table #qtyOfProduct");
+      for (var i = 0; i < qty.length; i++) {
+        // console.log(qty[i].children[1]);
+        qty[i].children[1].setAttribute("id", i + 1);
+      }
+      // =======================================================
+
+      // ==============incriment function =====================
+      function increment(e) {
+        JSON.parse(localStorage.getItem("products")).map((data) => {
+          if (
+            data.id == e.parentElement.parentElement.children[0].textContent
+          ) {
+            // console.log(e.parentElement.parentElement.children[0].textContent);
+            var values = document.getElementsByTagName("input")[1];
+
+            var value = parseInt(
+              document.getElementsByTagName("input")[1].value,
+              10
+            );
+            value = isNaN(value) ? 0 : value;
+            if (value < 10) {
+              value++;
+              document.getElementsByTagName("input")[1].value = value;
+            }
+          }
+        });
+
+        // =================total ============================
+        var priceColumn = document.querySelectorAll("table #fPrice");
+        for (var i = 0; i < priceColumn.length; i++) {
+          var foodPrice = priceColumn[i].textContent;
+          var qtyColumn = document.querySelectorAll("table .number");
+          var qunty = qtyColumn[i].value;
+          var total = qunty * foodPrice;
+
+          document.getElementById("totalPrice").innerHTML = total;
+        }
+        // =====================================================
+
+        // =================sub Total===========================
+        var totalPriceOfAllProduct =
+          document.querySelectorAll("table #totalPrice");
+        var sum = 0;
+        for (var i = 0; i < totalPriceOfAllProduct.length; i++) {
+          sum += parseInt(totalPriceOfAllProduct[i].textContent);
+        }
+        var sum = `SubTotal = $${total}`;
+        document.getElementById("sum").innerHTML = sum;
+      }
+      // ==========================================================
+
+      // ==============decriment function =====================
+      function decrement(e) {
+        JSON.parse(localStorage.getItem("products")).map((data) => {
+          if (
+            data.id == e.parentElement.parentElement.children[0].textContent
+          ) {
+            console.log(e.parentElement.parentElement.children[0].textContent);
+            var values = document.getElementsByTagName("input")[1];
+
+            for (var i = 0; i < qty.length; i++) {
+              console.log(qty[i].children[1].getAttribute("id"));
+            }
+
+            var value = parseInt(
+              document.getElementsByTagName("input")[1].value,
+              10
+            );
+            value = isNaN(value) ? 0 : value;
+            if (value > 1) {
+              value--;
+              document.getElementsByTagName("input")[1].value = value;
+            }
+          }
+        });
+
+        // =================total ============================
+        var priceColumn = document.querySelectorAll("table #fPrice");
+        for (var i = 0; i < priceColumn.length; i++) {
+          var foodPrice = priceColumn[i].textContent;
+          var qtyColumn = document.querySelectorAll("table .number");
+          var qunty = qtyColumn[i].value;
+          var total = qunty * foodPrice;
+
+          document.getElementById("totalPrice").innerHTML = total;
+        }
+
+        // =================sub total ============================
+        var totalPriceOfAllProduct =
+          document.querySelectorAll("table #totalPrice");
+        var sum = 0;
+        for (var i = 0; i < totalPriceOfAllProduct.length; i++) {
+          sum += parseInt(totalPriceOfAllProduct[i].textContent);
+        }
+        var sum = `SubTotal = $${total}`;
+        document.getElementById("sum").innerHTML = sum;
+      }
+
+      // ===================sub total====================================
+
+      var totalPriceOfAllProduct =
+        document.querySelectorAll("table #totalPrice");
+      var sum = 0;
+      for (var i = 0; i < totalPriceOfAllProduct.length; i++) {
+        sum += parseFloat(totalPriceOfAllProduct[i].textContent);
+      }
+      document.getElementById("sum").innerHTML += sum;
+    </script>
+  </body>
+</html>
