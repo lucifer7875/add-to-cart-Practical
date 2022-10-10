@@ -45,10 +45,10 @@ for (let i = 0; i < addToCart.length; i++) {
           if (product.id == data.id) {
             product.no = data.no + 1;
           } else {
-            products.push(data); // push the data in products array
+            products.push(data); 
           }
         });
-        products.push(product);
+        products.push(product);// push the data in products array
         localStorage.setItem("products", JSON.stringify(products));
         window.location.reload();
       }
